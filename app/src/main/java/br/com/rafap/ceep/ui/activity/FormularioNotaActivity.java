@@ -7,15 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.Serializable;
 
 import br.com.rafap.ceep.R;
-import br.com.rafap.ceep.dao.NotaDAO;
 import br.com.rafap.ceep.model.Nota;
 
 import static br.com.rafap.ceep.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
@@ -25,6 +19,8 @@ import static br.com.rafap.ceep.ui.activity.NotaActivityConstantes.POSICAO_INVAL
 public class FormularioNotaActivity extends AppCompatActivity {
 
 
+    public static final String TITULO_APPBAR_INSERE = "Inserir nota";
+    public static final String TITULO_APPBAR_ALTERA = "Alterar nota";
     private int posicaoRecibida = POSICAO_INVALIDA;
     private TextView titulo;
     private TextView descricao;
@@ -33,13 +29,13 @@ public class FormularioNotaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_nota);
-
+        setTitle(TITULO_APPBAR_INSERE);
         inicializaCampos();
 
         Intent dadosRecebidos = getIntent();
         if(dadosRecebidos.hasExtra(CHAVE_NOTA)){
-            Nota notaRecebida = (Nota) dadosRecebidos
-                    .getSerializableExtra(CHAVE_NOTA);
+            setTitle(TITULO_APPBAR_ALTERA);
+            Nota notaRecebida = (Nota) dadosRecebidos.getSerializableExtra(CHAVE_NOTA);
             posicaoRecibida = dadosRecebidos.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
             preencheCampos(notaRecebida);
         }
